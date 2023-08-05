@@ -5,6 +5,7 @@ Created on Tue Apr 14 16:32:44 2020
 @author: lauinger
 """
 
+
 from my_functions import Simulation
 from my_functions import Loop_Simulation
 
@@ -56,35 +57,35 @@ runs = 'single'
 
 # --------------- RUN THE SIMULATION ------------------
 print('------------------------------------')
-print('Year: '+str(year)+', Battery: '+str(battery)
-      +', Charger: '+str(charger)+', Drive: '+str(drive))
-print('gmm: '+str(gmm)+', Gmm: '+str(Gmm)+', gmmh: '+str(gmmh)+', Gmmh: '+str(Gmmh))
-print('Penalty: '+penalty+', kpen: '+str(kpen)+', py: '+str(py))
-print('Uni: '+str(uni)+', Losses: '+str(losses)+', Regulation: '+str(regulation)
-      +', Robust: '+str(robust)+', Plan losses: '+ str(plan_losses))
+print(f'Year: {year}, Battery: {battery}, Charger: {charger}, Drive: {drive}')
+print(f'gmm: {gmm}, Gmm: {Gmm}, gmmh: {gmmh}, Gmmh: {Gmmh}')
+print(f'Penalty: {penalty}, kpen: {kpen}, py: {py}')
+print(
+    f'Uni: {uni}, Losses: {losses}, Regulation: {regulation}, Robust: {str(robust)}, Plan losses: {str(plan_losses)}'
+)
 print('------------------------------------')
 
 # begin time measurement
 start = time.time()
 
-if runs == 'single':
-    print('p_star: '+str(p_star)+', y_star: '+str(y_star))
-    print('------------------------------------')
-    profit_y0 = Simulation(charger, battery, gmm, Gmm, gmmh, Gmmh,
-                           y_star, p_star, year, drive, uni, losses,
-                           regulation, robust, penalty, kpen, py,
-                           plan_losses, save_result, verbose)
 if runs == 'multi':
-    print('p_list: '+str(p_list))
-    print('y_list: '+str(y_list))
-    print('Sweep: '+sweep)
+    print(f'p_list: {str(p_list)}')
+    print(f'y_list: {str(y_list)}')
+    print(f'Sweep: {sweep}')
     print('------------------------------------')
     HM = Loop_Simulation(charger, battery, gmm, Gmm, gmmh, Gmmh, y_list, p_list,
                          year, drive, uni, losses, regulation, robust, penalty, 
                          kpen, py, plan_losses, save_result, sweep)
 
+elif runs == 'single':
+    print(f'p_star: {str(p_star)}, y_star: {str(y_star)}')
+    print('------------------------------------')
+    profit_y0 = Simulation(charger, battery, gmm, Gmm, gmmh, Gmmh,
+                           y_star, p_star, year, drive, uni, losses,
+                           regulation, robust, penalty, kpen, py,
+                           plan_losses, save_result, verbose)
 # end time measurement
 end = time.time()
 print('------------------------------------')
-print('Execution time : '+str(round((end - start)/60))+'min')
+print(f'Execution time : {str(round((end - start) / 60))}min')
 print('------------------------------------')
