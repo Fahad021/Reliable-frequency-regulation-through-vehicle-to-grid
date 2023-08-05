@@ -85,12 +85,12 @@ def Loop_Simulation(charger, battery, gmm, Gmm, gmmh, Gmmh, y_list, p_list,
                 else:
                     HM.loc[y_star, p_star] = profit_y0['Profit'].values[-1]
                 # Show profit and progress message
-                print('y_star: '+str(y_star)+', p_star: '+str(p_star)
-                       +', profit: '+str(round(HM.loc[y_star, p_star],2)))
+                print(
+                    f'y_star: {str(y_star)}, p_star: {str(p_star)}, profit: {str(round(HM.loc[y_star, p_star], 2))}'
+                )
                 print('Progress ', int(100*progress/(len(y_list)*len(p_list))))
                 print('------------------------------------')
                 progress = progress + 1
-    # sequential search
     elif sweep == 'sequential': 
         # start with the highest SOC, last element in the list
         y_star = y_list[-1]
@@ -107,8 +107,9 @@ def Loop_Simulation(charger, battery, gmm, Gmm, gmmh, Gmmh, y_list, p_list,
             else:
                 HM.loc[y_star, p_star] = profit_y0['Profit'].values[-1]
             # Show profit and progress message
-            print('y_star: '+str(y_star)+', p_star: '+str(p_star)
-                   +', profit: '+str(round(HM.loc[y_star, p_star],2)))
+            print(
+                f'y_star: {str(y_star)}, p_star: {str(p_star)}, profit: {str(round(HM.loc[y_star, p_star], 2))}'
+            )
             print('Progress ', int(100*progress/(len(y_list) + len(p_list) - 1)))
             print('------------------------------------')
             progress = progress + 1
@@ -127,22 +128,20 @@ def Loop_Simulation(charger, battery, gmm, Gmm, gmmh, Gmmh, y_list, p_list,
             else:
                 HM.loc[y_star, p_star] = profit_y0['Profit'].values[-1]
             # Show profit and progress message
-            print('y_star: '+str(y_star)+', p_star: '+str(p_star)
-                   +', profit: '+str(round(HM.loc[y_star, p_star],2)))
+            print(
+                f'y_star: {str(y_star)}, p_star: {str(p_star)}, profit: {str(round(HM.loc[y_star, p_star], 2))}'
+            )
             print('Progress ', int(100*progress/(len(y_list) + len(p_list) - 1)))
             print('------------------------------------')
             progress = progress + 1
-    # misspecified sweep
     else:
         print('ERROR: sweep must be either \'nested\' or \'sequential\'.')
     # Save the heatmap
     if save_result:
-        HM.to_hdf('Results/HM_'+str(year)+'_'+str(charger)+'kW_'+str(battery)+'kWh_'
-                  +str(gmm)+'gmm_'+str(Gmm)+'Gmm_'+str(drive)+'dr_'
-                  +str(penalty)+'_'+str(kpen)+'kpen_'+str(py)+'py_'
-                  +str(uni)+'_uni_'+str(losses)+'_losses_'
-                  +str(regulation)+'_regulation_'+str(robust)+'_robust_'
-                  +str(plan_losses)+'_plan_losses_'+str(sweep)+'.h5', key='HM')
+        HM.to_hdf(
+            f'Results/HM_{str(year)}_{str(charger)}kW_{str(battery)}kWh_{str(gmm)}gmm_{str(Gmm)}Gmm_{str(drive)}dr_{str(penalty)}_{str(kpen)}kpen_{str(py)}py_{str(uni)}_uni_{str(losses)}_losses_{str(regulation)}_regulation_{str(robust)}_robust_{str(plan_losses)}_plan_losses_{str(sweep)}.h5',
+            key='HM',
+        )
     # Return the results
     return HM
 
